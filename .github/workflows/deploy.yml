@@ -1,0 +1,18 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code auschecken
+        uses: actions/checkout@v3
+
+      - name: Docker Image bauen
+        run: docker build -t meine-app:latest .
+
+      - name: Erfolgsmeldung
+        run: echo "Image erfolgreich gebaut!"
