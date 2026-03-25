@@ -16,5 +16,6 @@ jobs:
 
       - name: In Kubernetes deployen
         run: |
-          sudo kubectl set image deployment/meine-app meine-app=meine-app:latest
+          docker save meine-app:latest | sudo k3s ctr images import -
+          sudo kubectl rollout restart deployment/meine-app
           sudo kubectl rollout status deployment/meine-app
