@@ -2,10 +2,29 @@ name: Build and Deploy
 
 on:
   push:
+   branches: [main]
+
+jobs:
+  bname: Build and Deploy
+
+on:
+  push:
     branches: [main]
 
 jobs:
-  build:
+  build-and-deploy:
+    runs-on: self-hosted
+    steps:
+      - name: Code auschecken
+        uses: actions/checkout@v3
+
+      - name: Docker Image bauen
+        run: docker build -t meine-app:latest .
+
+      - name: In Kubernetes deployen
+        run: |
+          sudo kubectl set image deployment/meine-app meine-app=meine-app:latest
+          sudo kubectl rollout status deployment/meine-appuild:
     runs-on: ubuntu-latest
     steps:
       - name: Code auschecken
